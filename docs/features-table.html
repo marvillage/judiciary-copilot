@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>CaseGraph feature and model map</title>
+<style>
+  @page { size: A4 landscape; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Inter, Arial, sans-serif; color: #111; margin: 0; font-size: 10.5px; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid #f5c518; padding-bottom: 8px; margin-bottom: 12px; }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-size: 22px; margin: 0; }
+  h1 span { color: #b8860b; }
+  .sub { color: #555; margin-top: 4px; font-size: 11px; }
+  .legend { display: flex; gap: 8px; flex-wrap: wrap; font-size: 10px; }
+  .chip { border-radius: 999px; padding: 2px 8px; color: #fff; font-weight: 600; white-space: nowrap; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { text-align: left; background: #111; color: #f5c518; padding: 6px 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  tbody td { padding: 5px 8px; border-bottom: 1px solid #e6e6e6; vertical-align: top; }
+  tbody tr:nth-child(even) td { background: #fafafa; }
+  tr.section td { background: #fff7d6 !important; font-weight: 700; color: #6f5708; border-top: 2px solid #f5c518; font-size: 11px; }
+  td.n { color: #888; width: 28px; }
+  td.order { width: 40px; font-weight: 800; color: #111; font-size: 12px; text-align: center; background: #fff7d6 !important; border-right: 2px solid #f5c518; }
+  td.feature { width: 32%; font-weight: 600; }
+  td.model { width: 38%; color: #333; }
+  td.phase { text-align: center; width: 48px; font-weight: 700; }
+  .p1 { color: #1f8a5b; } .p2 { color: #b8860b; } .p3 { color: #888; }
+  tr.milestone td { background: #111 !important; color: #f5c518; font-weight: 700; font-size: 11.5px; padding: 8px; }
+  tr.milestone td span { display: block; color: #ddd; font-weight: 400; font-size: 10px; margin-top: 2px; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  .break { page-break-before: always; }
+  h2 { font-family: Georgia, "Times New Roman", serif; font-size: 17px; margin: 0 0 6px; }
+  .howto { background: #fff7d6; border-left: 4px solid #f5c518; padding: 8px 12px; margin: 0 0 12px; font-size: 10.5px; line-height: 1.45; }
+  .howto b { color: #6f5708; }
+  footer { margin-top: 10px; font-size: 9.5px; color: #666; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Case<span>Graph</span> build order and model map</h1>
+    <div class="sub">50 features across four judiciary products, in the order to build them. Work one row at a time, top to bottom.</div>
+  </div>
+  <div class="legend">
+    <span class="chip" style="background:#2f6fdb">Basic ML · 9</span><span class="chip" style="background:#7b3fd1">Deep model · 9</span><span class="chip" style="background:#d1487b">Vision · 3</span><span class="chip" style="background:#b8860b">GenAI · 8</span><span class="chip" style="background:#1f8a5b">Graph · 6</span><span class="chip" style="background:#6b6b6b">Engineering · 15</span>
+  </div>
+</header>
+
+<h2>Part 1. What to build, in order</h2>
+<div class="howto">
+  <b>How to read this:</b> the gold <b>Order</b> column is your to-do list. Start at 1 and do not skip ahead; each milestone only needs what came before it.
+  <b>#</b> is the feature's fixed id, used in Part 2 and in the code. Six milestones: foundation, pendency models, legal research, bail with vision, consumer complaints, platform hardening.
+</div>
+<table>
+  <thead><tr><th>Order</th><th>#</th><th>Feature</th><th>Model or technique needed</th><th>Type</th><th>Phase</th></tr></thead>
+  <tbody>
+  <tr class="milestone"><td colspan="6">Milestone 1 - Foundation: data in, graph up, guardrails on<span>No ML yet. Get real court data flowing into Neo4j and build the two safety pieces every later feature depends on.</span></td></tr><tr>
+      <td class="order">1</td>
+      <td class="n">1</td>
+      <td class="feature">eCourts and NJDG case status ingestion by CNR, scheduled refresh</td>
+      <td class="model">Scraper + scheduler (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">2</td>
+      <td class="n">2</td>
+      <td class="feature">Judgment ingestion from Indian Kanoon, SC and HC sites with metadata</td>
+      <td class="model">Scraper + regex/NER metadata parser</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">3</td>
+      <td class="n">4</td>
+      <td class="feature">Statute graph: IPC/BNS, CrPC/BNSS, Evidence/BSA, CPA 2019 with old-to-new mapping</td>
+      <td class="model">Rule-based section parser + Neo4j schema + mapping table</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">4</td>
+      <td class="n">14</td>
+      <td class="feature">Pendency dashboard by state, district, court, case type</td>
+      <td class="model">Aggregation queries (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">5</td>
+      <td class="n">17</td>
+      <td class="feature">Matter tracker with alerts on new orders</td>
+      <td class="model">Scheduled diff + notifications (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">6</td>
+      <td class="n">7</td>
+      <td class="feature">Hybrid retrieval: vector embeddings + Cypher</td>
+      <td class="model">Sentence embedding model (bge-m3 or e5) + vector index + Cypher templates</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">7</td>
+      <td class="n">25</td>
+      <td class="feature">Citation verifier: every cited case must exist in graph</td>
+      <td class="model">Deterministic regex + graph lookup (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">8</td>
+      <td class="n">29</td>
+      <td class="feature">Old-to-new code cross reference in search and drafts</td>
+      <td class="model">Mapping table + Cypher (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">9</td>
+      <td class="n">39</td>
+      <td class="feature">Mandatory human review gate before draft release</td>
+      <td class="model">LangGraph interrupt / approval node (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr class="milestone"><td colspan="6">Milestone 2 - First models: pendency predictor<span>Your first basic ML, first explanation with an LLM, and first deep model, all on the same hearing data.</span></td></tr><tr>
+      <td class="order">10</td>
+      <td class="n">9</td>
+      <td class="feature">Time-to-disposal prediction with confidence range</td>
+      <td class="model">Gradient boosting regression (LightGBM) or survival model (Cox / random survival forest)</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">11</td>
+      <td class="n">11</td>
+      <td class="feature">Adjournment likelihood for next hearing</td>
+      <td class="model">Binary classifier (logistic regression baseline, then GBM)</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">12</td>
+      <td class="n">13</td>
+      <td class="feature">Benchmark against similar cases in same court</td>
+      <td class="model">kNN on case feature vectors + Cypher filters</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">13</td>
+      <td class="n">15</td>
+      <td class="feature">Hearing gap anomaly detection</td>
+      <td class="model">Isolation forest or z-score on inter-hearing gaps</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">14</td>
+      <td class="n">12</td>
+      <td class="feature">Delay driver explanation in plain language</td>
+      <td class="model">SHAP feature attributions + LLM narrative</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">15</td>
+      <td class="n">10</td>
+      <td class="feature">Stage-wise stall prediction</td>
+      <td class="model">Multiclass GBM, or sequence model (LSTM / Transformer) over hearing history</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr class="milestone"><td colspan="6">Milestone 3 - Legal research: embeddings and citation graph<span>Deep models and GenAI on judgment text. The citation graph becomes useful here.</span></td></tr><tr>
+      <td class="order">16</td>
+      <td class="n">19</td>
+      <td class="feature">Brief-to-precedent semantic search</td>
+      <td class="model">Embedding retriever + cross-encoder reranker</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">17</td>
+      <td class="n">26</td>
+      <td class="feature">Judgment summariser: facts, issues, holding, ratio</td>
+      <td class="model">LLM structured extraction; optional fine-tuned seq2seq (Flan-T5 / mT5)</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">18</td>
+      <td class="n">5</td>
+      <td class="feature">Citation graph with typed edges: cites, follows, distinguishes, overrules, interprets</td>
+      <td class="model">Citation regex + relation classifier (fine-tuned LegalBERT / InLegalBERT)</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">19</td>
+      <td class="n">21</td>
+      <td class="feature">Treatment status: followed, distinguished, overruled</td>
+      <td class="model">Relation classifier on citing sentences (fine-tuned LegalBERT)</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">20</td>
+      <td class="n">20</td>
+      <td class="feature">Interactive citation graph view for any judgment</td>
+      <td class="model">Neo4j traversal + graph visualisation (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">21</td>
+      <td class="n">23</td>
+      <td class="feature">Statute-centric timeline of interpreting judgments</td>
+      <td class="model">Cypher query over interprets edges (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">22</td>
+      <td class="n">24</td>
+      <td class="feature">Research memo drafting with verified citations only</td>
+      <td class="model">LLM in LangGraph with retrieval and verifier node</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">23</td>
+      <td class="n">6</td>
+      <td class="feature">Entity resolution for judges, courts, advocates, parties</td>
+      <td class="model">String similarity features + logistic regression or XGBoost match classifier</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">24</td>
+      <td class="n">8</td>
+      <td class="feature">Document deduplication and versioning</td>
+      <td class="model">MinHash / SimHash near-duplicate detection</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr class="milestone"><td colspan="6">Milestone 4 - Bail and undertrial: vision enters<span>Rule engine first, then the vision model reads scanned remand orders, then drafting behind the review gate.</span></td></tr><tr>
+      <td class="order">25</td>
+      <td class="n">31</td>
+      <td class="feature">Eligibility computation under BNSS Section 479</td>
+      <td class="model">Rule engine over statute graph (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">26</td>
+      <td class="n">33</td>
+      <td class="feature">Offence severity and maximum sentence lookup</td>
+      <td class="model">Statute graph query (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">27</td>
+      <td class="n">3</td>
+      <td class="feature">Scanned document OCR for orders, FIRs, charge sheets, remand slips</td>
+      <td class="model">OCR (PaddleOCR or Tesseract) + vision LLM for layout and fields</td>
+      <td><span class="chip" style="background:#d1487b">Vision</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">28</td>
+      <td class="n">32</td>
+      <td class="feature">Custody period from remand and production orders</td>
+      <td class="model">Vision LLM or OCR + date/entity extraction</td>
+      <td><span class="chip" style="background:#d1487b">Vision</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">29</td>
+      <td class="n">35</td>
+      <td class="feature">Bail precedent finder for similar offence and facts</td>
+      <td class="model">Embedding similarity on fact patterns + filters</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">30</td>
+      <td class="n">34</td>
+      <td class="feature">Bail application draft generator, court-specific format</td>
+      <td class="model">LLM with templates in LangGraph</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">31</td>
+      <td class="n">37</td>
+      <td class="feature">Prison-wise and district-wise undertrial dashboard</td>
+      <td class="model">Aggregation queries (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr class="milestone"><td colspan="6">Milestone 5 - Consumer complaints<span>Reuse vision and drafting from Milestone 4 on a simpler, high-volume workflow.</span></td></tr><tr>
+      <td class="order">32</td>
+      <td class="n">41</td>
+      <td class="feature">Forum and jurisdiction finder by claim value and location</td>
+      <td class="model">Rule engine on pecuniary limits (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">33</td>
+      <td class="n">42</td>
+      <td class="feature">Limitation period check with reminders</td>
+      <td class="model">Rule engine + date extraction (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">34</td>
+      <td class="n">40</td>
+      <td class="feature">Evidence intake from photos of bills, warranty cards, chat screenshots</td>
+      <td class="model">Document type classifier (small CNN / ViT) + vision LLM field extraction</td>
+      <td><span class="chip" style="background:#d1487b">Vision</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">35</td>
+      <td class="n">43</td>
+      <td class="feature">Complaint drafting in prescribed format with relief computation</td>
+      <td class="model">LLM with templates</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">36</td>
+      <td class="n">44</td>
+      <td class="feature">Similar order retrieval from NCDRC and State Commissions</td>
+      <td class="model">Embedding retriever over orders</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">37</td>
+      <td class="n">45</td>
+      <td class="feature">Outcome and compensation estimate from past orders</td>
+      <td class="model">Outcome classifier + compensation regression (GBM)</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr class="milestone"><td colspan="6">Milestone 6 - Platform hardening and later features<span>Multi-user SaaS plumbing, retraining loop, then every Phase 3 feature.</span></td></tr><tr>
+      <td class="order">38</td>
+      <td class="n">49</td>
+      <td class="feature">Role-based access: litigant, lawyer, legal aid, researcher</td>
+      <td class="model">Application feature (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">39</td>
+      <td class="n">50</td>
+      <td class="feature">Agent audit trail and feedback loop to retrain classifiers</td>
+      <td class="model">LangGraph tracing (LangSmith) + retraining pipeline (MLflow)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">40</td>
+      <td class="n">16</td>
+      <td class="feature">Next hearing outcome: adjourn, progress, dispose</td>
+      <td class="model">Sequence model (GRU / small Transformer) on hearing event sequence</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">41</td>
+      <td class="n">22</td>
+      <td class="feature">Conflicting bench detection across High Courts</td>
+      <td class="model">NLI / contradiction model on holdings + graph queries</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">42</td>
+      <td class="n">27</td>
+      <td class="feature">Headnote and issue generation</td>
+      <td class="model">LLM generation with few-shot examples</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">43</td>
+      <td class="n">28</td>
+      <td class="feature">Argument builder: authorities for and against</td>
+      <td class="model">LLM + retrieval + stance classifier</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">44</td>
+      <td class="n">36</td>
+      <td class="feature">Legal aid queue prioritised by eligibility and custody time</td>
+      <td class="model">Ranking model (GBM) or weighted score</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">45</td>
+      <td class="n">18</td>
+      <td class="feature">Alternative route suggestion: Lok Adalat, mediation, fast-track</td>
+      <td class="model">Rule engine + eligibility classifier</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">46</td>
+      <td class="n">38</td>
+      <td class="feature">Hearing reminder and bail condition compliance tracker</td>
+      <td class="model">Scheduler + notifications (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">47</td>
+      <td class="n">46</td>
+      <td class="feature">e-Daakhil filing checklist and fee calculator</td>
+      <td class="model">Rule engine (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">48</td>
+      <td class="n">47</td>
+      <td class="feature">Post-filing case timeline tracker</td>
+      <td class="model">Scheduler + eCourts sync (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">49</td>
+      <td class="n">30</td>
+      <td class="feature">Saved research workspaces with DOCX and PDF export</td>
+      <td class="model">Application feature (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">50</td>
+      <td class="n">48</td>
+      <td class="feature">Multilingual question answering and drafting (Hindi, regional)</td>
+      <td class="model">Multilingual LLM + IndicTrans2 translation model</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p3">3</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="break"></div>
+<h2>Part 2. The same 50 features grouped by product</h2>
+<div class="howto">Reference view. The <b>Order</b> column repeats the build position from Part 1 so you can see where each product's features fall in the sequence.</div>
+<table>
+  <thead><tr><th>Order</th><th>#</th><th>Feature</th><th>Model or technique needed</th><th>Type</th><th>Phase</th></tr></thead>
+  <tbody>
+  <tr class="section"><td colspan="6">A. Data ingestion and knowledge graph</td></tr><tr>
+      <td class="order">1</td>
+      <td class="n">1</td>
+      <td class="feature">eCourts and NJDG case status ingestion by CNR, scheduled refresh</td>
+      <td class="model">Scraper + scheduler (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">2</td>
+      <td class="n">2</td>
+      <td class="feature">Judgment ingestion from Indian Kanoon, SC and HC sites with metadata</td>
+      <td class="model">Scraper + regex/NER metadata parser</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">27</td>
+      <td class="n">3</td>
+      <td class="feature">Scanned document OCR for orders, FIRs, charge sheets, remand slips</td>
+      <td class="model">OCR (PaddleOCR or Tesseract) + vision LLM for layout and fields</td>
+      <td><span class="chip" style="background:#d1487b">Vision</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">3</td>
+      <td class="n">4</td>
+      <td class="feature">Statute graph: IPC/BNS, CrPC/BNSS, Evidence/BSA, CPA 2019 with old-to-new mapping</td>
+      <td class="model">Rule-based section parser + Neo4j schema + mapping table</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">18</td>
+      <td class="n">5</td>
+      <td class="feature">Citation graph with typed edges: cites, follows, distinguishes, overrules, interprets</td>
+      <td class="model">Citation regex + relation classifier (fine-tuned LegalBERT / InLegalBERT)</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">23</td>
+      <td class="n">6</td>
+      <td class="feature">Entity resolution for judges, courts, advocates, parties</td>
+      <td class="model">String similarity features + logistic regression or XGBoost match classifier</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">6</td>
+      <td class="n">7</td>
+      <td class="feature">Hybrid retrieval: vector embeddings + Cypher</td>
+      <td class="model">Sentence embedding model (bge-m3 or e5) + vector index + Cypher templates</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">24</td>
+      <td class="n">8</td>
+      <td class="feature">Document deduplication and versioning</td>
+      <td class="model">MinHash / SimHash near-duplicate detection</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr class="section"><td colspan="6">B. Case pendency and delay predictor</td></tr><tr>
+      <td class="order">10</td>
+      <td class="n">9</td>
+      <td class="feature">Time-to-disposal prediction with confidence range</td>
+      <td class="model">Gradient boosting regression (LightGBM) or survival model (Cox / random survival forest)</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">15</td>
+      <td class="n">10</td>
+      <td class="feature">Stage-wise stall prediction</td>
+      <td class="model">Multiclass GBM, or sequence model (LSTM / Transformer) over hearing history</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">11</td>
+      <td class="n">11</td>
+      <td class="feature">Adjournment likelihood for next hearing</td>
+      <td class="model">Binary classifier (logistic regression baseline, then GBM)</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">14</td>
+      <td class="n">12</td>
+      <td class="feature">Delay driver explanation in plain language</td>
+      <td class="model">SHAP feature attributions + LLM narrative</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">12</td>
+      <td class="n">13</td>
+      <td class="feature">Benchmark against similar cases in same court</td>
+      <td class="model">kNN on case feature vectors + Cypher filters</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">4</td>
+      <td class="n">14</td>
+      <td class="feature">Pendency dashboard by state, district, court, case type</td>
+      <td class="model">Aggregation queries (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">13</td>
+      <td class="n">15</td>
+      <td class="feature">Hearing gap anomaly detection</td>
+      <td class="model">Isolation forest or z-score on inter-hearing gaps</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">40</td>
+      <td class="n">16</td>
+      <td class="feature">Next hearing outcome: adjourn, progress, dispose</td>
+      <td class="model">Sequence model (GRU / small Transformer) on hearing event sequence</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">5</td>
+      <td class="n">17</td>
+      <td class="feature">Matter tracker with alerts on new orders</td>
+      <td class="model">Scheduled diff + notifications (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">45</td>
+      <td class="n">18</td>
+      <td class="feature">Alternative route suggestion: Lok Adalat, mediation, fast-track</td>
+      <td class="model">Rule engine + eligibility classifier</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr class="section"><td colspan="6">C. Legal research assistant</td></tr><tr>
+      <td class="order">16</td>
+      <td class="n">19</td>
+      <td class="feature">Brief-to-precedent semantic search</td>
+      <td class="model">Embedding retriever + cross-encoder reranker</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">20</td>
+      <td class="n">20</td>
+      <td class="feature">Interactive citation graph view for any judgment</td>
+      <td class="model">Neo4j traversal + graph visualisation (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">19</td>
+      <td class="n">21</td>
+      <td class="feature">Treatment status: followed, distinguished, overruled</td>
+      <td class="model">Relation classifier on citing sentences (fine-tuned LegalBERT)</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">41</td>
+      <td class="n">22</td>
+      <td class="feature">Conflicting bench detection across High Courts</td>
+      <td class="model">NLI / contradiction model on holdings + graph queries</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">21</td>
+      <td class="n">23</td>
+      <td class="feature">Statute-centric timeline of interpreting judgments</td>
+      <td class="model">Cypher query over interprets edges (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">22</td>
+      <td class="n">24</td>
+      <td class="feature">Research memo drafting with verified citations only</td>
+      <td class="model">LLM in LangGraph with retrieval and verifier node</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">7</td>
+      <td class="n">25</td>
+      <td class="feature">Citation verifier: every cited case must exist in graph</td>
+      <td class="model">Deterministic regex + graph lookup (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">17</td>
+      <td class="n">26</td>
+      <td class="feature">Judgment summariser: facts, issues, holding, ratio</td>
+      <td class="model">LLM structured extraction; optional fine-tuned seq2seq (Flan-T5 / mT5)</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">42</td>
+      <td class="n">27</td>
+      <td class="feature">Headnote and issue generation</td>
+      <td class="model">LLM generation with few-shot examples</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">43</td>
+      <td class="n">28</td>
+      <td class="feature">Argument builder: authorities for and against</td>
+      <td class="model">LLM + retrieval + stance classifier</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">8</td>
+      <td class="n">29</td>
+      <td class="feature">Old-to-new code cross reference in search and drafts</td>
+      <td class="model">Mapping table + Cypher (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">49</td>
+      <td class="n">30</td>
+      <td class="feature">Saved research workspaces with DOCX and PDF export</td>
+      <td class="model">Application feature (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr class="section"><td colspan="6">D. Bail and undertrial monitoring</td></tr><tr>
+      <td class="order">25</td>
+      <td class="n">31</td>
+      <td class="feature">Eligibility computation under BNSS Section 479</td>
+      <td class="model">Rule engine over statute graph (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">28</td>
+      <td class="n">32</td>
+      <td class="feature">Custody period from remand and production orders</td>
+      <td class="model">Vision LLM or OCR + date/entity extraction</td>
+      <td><span class="chip" style="background:#d1487b">Vision</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">26</td>
+      <td class="n">33</td>
+      <td class="feature">Offence severity and maximum sentence lookup</td>
+      <td class="model">Statute graph query (no model)</td>
+      <td><span class="chip" style="background:#1f8a5b">Graph</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">30</td>
+      <td class="n">34</td>
+      <td class="feature">Bail application draft generator, court-specific format</td>
+      <td class="model">LLM with templates in LangGraph</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">29</td>
+      <td class="n">35</td>
+      <td class="feature">Bail precedent finder for similar offence and facts</td>
+      <td class="model">Embedding similarity on fact patterns + filters</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">44</td>
+      <td class="n">36</td>
+      <td class="feature">Legal aid queue prioritised by eligibility and custody time</td>
+      <td class="model">Ranking model (GBM) or weighted score</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">31</td>
+      <td class="n">37</td>
+      <td class="feature">Prison-wise and district-wise undertrial dashboard</td>
+      <td class="model">Aggregation queries (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">46</td>
+      <td class="n">38</td>
+      <td class="feature">Hearing reminder and bail condition compliance tracker</td>
+      <td class="model">Scheduler + notifications (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">9</td>
+      <td class="n">39</td>
+      <td class="feature">Mandatory human review gate before draft release</td>
+      <td class="model">LangGraph interrupt / approval node (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr class="section"><td colspan="6">E. Consumer court complaint helper</td></tr><tr>
+      <td class="order">34</td>
+      <td class="n">40</td>
+      <td class="feature">Evidence intake from photos of bills, warranty cards, chat screenshots</td>
+      <td class="model">Document type classifier (small CNN / ViT) + vision LLM field extraction</td>
+      <td><span class="chip" style="background:#d1487b">Vision</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">32</td>
+      <td class="n">41</td>
+      <td class="feature">Forum and jurisdiction finder by claim value and location</td>
+      <td class="model">Rule engine on pecuniary limits (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">33</td>
+      <td class="n">42</td>
+      <td class="feature">Limitation period check with reminders</td>
+      <td class="model">Rule engine + date extraction (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p1">1</td>
+    </tr><tr>
+      <td class="order">35</td>
+      <td class="n">43</td>
+      <td class="feature">Complaint drafting in prescribed format with relief computation</td>
+      <td class="model">LLM with templates</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">36</td>
+      <td class="n">44</td>
+      <td class="feature">Similar order retrieval from NCDRC and State Commissions</td>
+      <td class="model">Embedding retriever over orders</td>
+      <td><span class="chip" style="background:#7b3fd1">Deep model</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">37</td>
+      <td class="n">45</td>
+      <td class="feature">Outcome and compensation estimate from past orders</td>
+      <td class="model">Outcome classifier + compensation regression (GBM)</td>
+      <td><span class="chip" style="background:#2f6fdb">Basic ML</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">47</td>
+      <td class="n">46</td>
+      <td class="feature">e-Daakhil filing checklist and fee calculator</td>
+      <td class="model">Rule engine (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">48</td>
+      <td class="n">47</td>
+      <td class="feature">Post-filing case timeline tracker</td>
+      <td class="model">Scheduler + eCourts sync (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr class="section"><td colspan="6">F. Cross-cutting</td></tr><tr>
+      <td class="order">50</td>
+      <td class="n">48</td>
+      <td class="feature">Multilingual question answering and drafting (Hindi, regional)</td>
+      <td class="model">Multilingual LLM + IndicTrans2 translation model</td>
+      <td><span class="chip" style="background:#b8860b">GenAI</span></td>
+      <td class="phase p3">3</td>
+    </tr><tr>
+      <td class="order">38</td>
+      <td class="n">49</td>
+      <td class="feature">Role-based access: litigant, lawyer, legal aid, researcher</td>
+      <td class="model">Application feature (no model)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p2">2</td>
+    </tr><tr>
+      <td class="order">39</td>
+      <td class="n">50</td>
+      <td class="feature">Agent audit trail and feedback loop to retrain classifiers</td>
+      <td class="model">LangGraph tracing (LangSmith) + retraining pipeline (MLflow)</td>
+      <td><span class="chip" style="background:#6b6b6b">Engineering</span></td>
+      <td class="phase p2">2</td>
+    </tr>
+  </tbody>
+</table>
+<footer>
+  <span>Sources: eCourts, NJDG, Indian Kanoon, SC/HC websites, NCDRC orders. Stack: Neo4j, LangChain, LangGraph, scikit-learn/LightGBM, PyTorch, vision LLM.</span>
+  <span>Generated 2026-09-12</span>
+</footer>
+</body>
+</html>

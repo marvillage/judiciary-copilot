@@ -1,0 +1,35 @@
+from_act,from_num,from_heading,to_act,to_num,to_heading,relation,source
+crpc,41A,Notice of appearance before police officer,bnss,35,Arrest without warrant and notice of appearance,merged,BPRD comparison table
+crpc,436A,Maximum period for which an undertrial prisoner can be detained,bnss,479,Maximum period for which undertrial prisoner can be detained,near-identical,BPRD comparison table
+ipc,302,Punishment for murder,bns,103,Punishment for murder,near-identical,BPRD comparison table
+ipc,304,Punishment for culpable homicide not amounting to murder,bns,105,Punishment for culpable homicide not amounting to murder,near-identical,BPRD comparison table
+ipc,304A,Causing death by negligence,bns,106,Causing death by negligence,changed-punishment,BPRD comparison table
+ipc,304B,Dowry death,bns,80,Dowry death,near-identical,BPRD comparison table
+ipc,306,Abetment of suicide,bns,108,Abetment of suicide,near-identical,BPRD comparison table
+ipc,307,Attempt to murder,bns,109,Attempt to murder,near-identical,BPRD comparison table
+ipc,323,Punishment for voluntarily causing hurt,bns,115,Voluntarily causing hurt,near-identical,BPRD comparison table
+ipc,324,Voluntarily causing hurt by dangerous weapons or means,bns,118,Voluntarily causing hurt or grievous hurt by dangerous weapons or means,near-identical,BPRD comparison table
+ipc,354,Assault or criminal force to woman with intent to outrage her modesty,bns,74,Assault or use of criminal force to woman with intent to outrage her modesty,near-identical,BPRD comparison table
+ipc,354A,Sexual harassment,bns,75,Sexual harassment,near-identical,BPRD comparison table
+ipc,363,Punishment for kidnapping,bns,137,Kidnapping,near-identical,BPRD comparison table
+ipc,376,Punishment for rape,bns,64,Punishment for rape,near-identical,BPRD comparison table
+ipc,379,Punishment for theft,bns,303,Theft,near-identical,BPRD comparison table
+ipc,380,Theft in dwelling house,bns,305,Theft in a dwelling house or means of transportation or place of worship,near-identical,BPRD comparison table
+ipc,392,Punishment for robbery,bns,309,Robbery,near-identical,BPRD comparison table
+ipc,395,Punishment for dacoity,bns,310,Dacoity,near-identical,BPRD comparison table
+ipc,406,Punishment for criminal breach of trust,bns,316,Criminal breach of trust,near-identical,BPRD comparison table
+ipc,420,Cheating and dishonestly inducing delivery of property,bns,318,Cheating,near-identical,BPRD comparison table
+ipc,498A,Husband or relative of husband of a woman subjecting her to cruelty,bns,85,Husband or relative of husband of a woman subjecting her to cruelty,near-identical,BPRD comparison table
+ipc,499,Defamation,bns,356,Defamation,near-identical,BPRD comparison table
+ipc,506,Punishment for criminal intimidation,bns,351,Criminal intimidation,near-identical,BPRD comparison table
+crpc,41,When police may arrest without warrant,bnss,35,When police may arrest without warrant,near-identical,BPRD comparison table
+crpc,154,Information in cognizable cases,bnss,173,Information in cognizable cases,near-identical,BPRD comparison table
+crpc,161,Examination of witnesses by police,bnss,180,Examination of witnesses by police,near-identical,BPRD comparison table
+crpc,164,Recording of confessions and statements,bnss,183,Recording of confessions and statements,near-identical,BPRD comparison table
+crpc,167,Procedure when investigation cannot be completed in twenty-four hours,bnss,187,Procedure when investigation cannot be completed in twenty-four hours,near-identical,BPRD comparison table
+crpc,173,Report of police officer on completion of investigation,bnss,193,Report of police officer on completion of investigation,near-identical,BPRD comparison table
+crpc,436,In what cases bail to be taken,bnss,478,In what cases bail to be taken,near-identical,BPRD comparison table
+crpc,437,When bail may be taken in case of non-bailable offence,bnss,480,When bail may be taken in case of non-bailable offence,near-identical,BPRD comparison table
+crpc,438,Direction for grant of bail to person apprehending arrest,bnss,482,Direction for grant of bail to person apprehending arrest,near-identical,BPRD comparison table
+crpc,439,Special powers of High Court or Court of Session regarding bail,bnss,483,Special powers of High Court or Court of Session regarding bail,near-identical,BPRD comparison table
+crpc,482,Saving of inherent powers of High Court,bnss,528,Saving of inherent powers of High Court,near-identical,BPRD comparison table

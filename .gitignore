@@ -1,0 +1,29 @@
+# Secrets: any .env file, but keep the documented examples
+.env
+.env.*
+!.env.example
+*.local
+
+# Python
+backend/.venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Large local data and model weights
+backend/data/raw/
+backend/data/import/
+backend/models/
+
+# Frontend
+node_modules/
+frontend/dist/
+dist/
+.vercel/
+
+# OS / editor
+.DS_Store
+Thumbs.db

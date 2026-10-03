@@ -1,0 +1,42 @@
+act,num,max_punishment_years,punishment,bailable,cognizable
+bns,103,life,Death or imprisonment for life and fine,no,yes
+bns,105,life,Imprisonment for life or up to 10 years and fine,no,yes
+bns,106,5,Imprisonment up to 5 years and fine (10 years if hit and run without reporting),yes,yes
+bns,80,life,Imprisonment not less than 7 years extendable to life,no,yes
+bns,108,10,Imprisonment up to 10 years and fine,no,yes
+bns,109,life,Imprisonment up to 10 years and fine; life if hurt caused,no,yes
+bns,115,1,Imprisonment up to 1 year or fine up to 10000 or both,yes,no
+bns,118,3,Imprisonment up to 3 years or fine up to 20000 or both (7 years for grievous hurt),yes,yes
+bns,74,5,Imprisonment not less than 1 year extendable to 5 years and fine,no,yes
+bns,75,3,Imprisonment up to 3 years or fine or both,yes,yes
+bns,137,7,Imprisonment up to 7 years and fine,no,yes
+bns,64,life,Rigorous imprisonment not less than 10 years extendable to life and fine,no,yes
+bns,303,3,Imprisonment up to 3 years or fine or both,yes,yes
+bns,305,7,Imprisonment up to 7 years and fine,no,yes
+bns,309,10,Rigorous imprisonment up to 10 years and fine,no,yes
+bns,310,life,Imprisonment for life or rigorous imprisonment up to 10 years and fine,no,yes
+bns,316,5,Imprisonment up to 5 years or fine or both,no,yes
+bns,318,7,Imprisonment up to 7 years and fine for cheating with delivery of property,no,yes
+bns,85,3,Imprisonment up to 3 years and fine,no,yes
+bns,356,2,Simple imprisonment up to 2 years or fine or both or community service,yes,no
+bns,351,2,Imprisonment up to 2 years or fine or both (7 years for threat to cause death or grievous hurt),yes,no
+ipc,302,life,Death or imprisonment for life and fine,no,yes
+ipc,304,life,Imprisonment for life or up to 10 years and fine,no,yes
+ipc,304A,2,Imprisonment up to 2 years or fine or both,yes,yes
+ipc,304B,life,Imprisonment not less than 7 years extendable to life,no,yes
+ipc,306,10,Imprisonment up to 10 years and fine,no,yes
+ipc,307,life,Imprisonment up to 10 years and fine; life if hurt caused,no,yes
+ipc,323,1,Imprisonment up to 1 year or fine up to 1000 or both,yes,no
+ipc,324,3,Imprisonment up to 3 years or fine or both,no,yes
+ipc,354,5,Imprisonment not less than 1 year extendable to 5 years and fine,no,yes
+ipc,363,7,Imprisonment up to 7 years and fine,yes,yes
+ipc,376,life,Rigorous imprisonment not less than 10 years extendable to life and fine,no,yes
+ipc,379,3,Imprisonment up to 3 years or fine or both,no,yes
+ipc,380,7,Imprisonment up to 7 years and fine,no,yes
+ipc,392,10,Rigorous imprisonment up to 10 years and fine,no,yes
+ipc,395,life,Imprisonment for life or rigorous imprisonment up to 10 years and fine,no,yes
+ipc,406,3,Imprisonment up to 3 years or fine or both,no,yes
+ipc,420,7,Imprisonment up to 7 years and fine,no,yes
+ipc,498A,3,Imprisonment up to 3 years and fine,no,yes
+ipc,499,2,Simple imprisonment up to 2 years or fine or both,yes,no
+ipc,506,2,Imprisonment up to 2 years or fine or both (7 years for threat to cause death or grievous hurt),yes,no
